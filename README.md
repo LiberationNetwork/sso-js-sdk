@@ -1,7 +1,7 @@
 # LiberationNetwork/liberalize-sso-js-sdk
 This is the clientside SDK to implement Single Sign On with Liberalize
 
-The `liberalize-sso-js-sdk` package contains only the functionality necessary to signin via liberalize. It is typically used to easily implement login components with liberalize and are heavily used in liberalize services as well as open source projects.
+The `liberalize-sso-js-sdk` package contains only the functionality necessary to signin via Liberalize. It is typically used to easily implement login components with liberalize and are heavily used in liberalize services as well as open source projects.
 
 **Note:** By default, LiberalizeSSO will be in production mode. The staging version are for you to integrate with other staging environments of Liberalize services. Don't forget to build the correct environment when deploying your applications.
 
@@ -19,7 +19,7 @@ or
     var LiberalizeSSO = require('liberalize-sso-js-sdk')
 
 ## Initializing LiberalizeSSO
-You will have to initialize LiberalizeSSO by providing the sample code below at the very beginning of your app. Both the environment and clientId are string values. the result return will be the user profile that comes from an authenticated user.
+You will have to initialize LiberalizeSSO by providing the sample code below at the very beginning of your app. Both the environment (e.g. "prod" or "staging") and clientId are string values. the result return will be the user profile that comes from an authenticated user.
 
     const libsso = new LiberalizeSSO(<your-client-id>, <environment>)
 
