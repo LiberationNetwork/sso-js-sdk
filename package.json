@@ -1,6 +1,6 @@
 {
   "name": "liberalize-sso-js-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Liberalize Javascript Library for Single Sign On.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LiberalizeOS/SSO-Client-JS-SDK.git"
+    "url": "git+https://github.com/LiberationNetwork/sso-js-sdk.git"
   },
   "keywords": [
     "liberalize",
@@ -18,9 +18,9 @@
   "author": "Kenneth",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LiberalizeOS/SSO-Client-JS-SDK/issues"
+    "url": "https://github.com/LiberationNetwork/sso-js-sdk/issues"
   },
-  "homepage": "https://github.com/LiberalizeOS/SSO-Client-JS-SDK#readme",
+  "homepage": "https://github.com/LiberationNetwork/sso-js-sdk#readme",
   "dependencies": {
     "axios": "^0.19.2"
   }

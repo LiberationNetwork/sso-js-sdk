@@ -4,13 +4,13 @@ exports.LiberalizeSSO = class {
     constructor(clientId, environment="prod") {
         switch (environment) {
             case "prod":
-                this.ssoURI = "https://sso.liberalize.io/"
+                this.ssoURI = "https://sso.liberalize.io"
                 break;
             case "staging":
-                this.ssoURI = "https://sso.staging.liberalize.io/"
+                this.ssoURI = "https://sso.staging.liberalize.io"
                 break;
             case "dev":
-                this.ssoURI = "https://sso.dev.liberalize.io/"
+                this.ssoURI = "https://sso.dev.liberalize.io"
                 break;
             case "local":
                 this.ssoURI = "http://localhost:3000"
@@ -62,5 +62,11 @@ exports.LiberalizeSSO = class {
         if (this.clientId) return new Error("No ClientId Found")
         window.location.href = this.ssoURI + "?redirect=" + redirectTo + "&clientId=" + this.clientId
 
+    }
+
+    signOut() {
+        window.localStorage.setItem('libJwt', '')
+        window.localStorage.setItem('libJwtExp', '')
+        window.localStorage.setItem('libJwtAccess', '')
     }
 }
