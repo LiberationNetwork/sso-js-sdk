@@ -5,15 +5,19 @@ exports.LiberalizeSSO = class {
         switch (environment) {
             case "prod":
                 this.ssoURI = "https://sso.liberalize.io"
+                this.ssoApi = "https://sso.api.liberalize.io"
                 break;
             case "staging":
                 this.ssoURI = "https://sso.staging.liberalize.io"
+                this.ssoApi = "https://sso.api.staging.liberalize.io"
                 break;
             case "dev":
                 this.ssoURI = "https://sso.dev.liberalize.io"
+                this.ssoApi = "https://sso.api.dev.liberalize.io"
                 break;
             case "local":
                 this.ssoURI = "http://localhost:3000"
+                this.ssoApi = "https://sso.api.dev.liberalize.io"
             default:
                 break;
         }
@@ -26,7 +30,7 @@ exports.LiberalizeSSO = class {
                 if (queryArr[0] === "code") {
                     try {
                         var tokenRes = await axios.get(
-                            `${this.ssoURI}/token?code=${queryArr[1]}&clientId=${clientId}&grantType=authorization_code`
+                            `${this.ssoApi}/token?code=${queryArr[1]}&clientId=${clientId}&grantType=authorization_code`
                         )
                         window.localStorage.setItem('libJwt', tokenRes.data.idToken)
                         window.localStorage.setItem('libJwtExp', tokenRes.data.expiresAt)
@@ -43,7 +47,7 @@ exports.LiberalizeSSO = class {
         var liberalizeJWT = window.localStorage.getItem('libJwt');
         try {
             var authRes = await axios.post(
-                `${this.ssoURI}/authenticate`,
+                `${this.ssoApi}/authenticate`,
                 {
                     "clientId": this.clientId
                 },
@@ -59,9 +63,8 @@ exports.LiberalizeSSO = class {
 
     signIn(redirectURL="") {
         var redirectTo = redirectURL || window.location.href
-        if (this.clientId) return new Error("No ClientId Found")
-        window.location.href = this.ssoURI + "?redirect=" + redirectTo + "&clientId=" + this.clientId
-
+        if (!this.clientId) return new Error("No ClientId Found")
+        window.location.href = `${this.ssoURI}?redirectUrl=${redirectTo}&clientId=${this.clientId}`
     }
 
     signOut() {
