@@ -1,6 +1,6 @@
 {
   "name": "liberalize-sso-js-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Liberalize Javascript Library for Single Sign On.",
   "main": "index.js",
   "scripts": {
