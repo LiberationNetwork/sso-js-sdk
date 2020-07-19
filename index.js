@@ -4,19 +4,19 @@ exports.LiberalizeSSO = class {
     constructor(clientId, environment="prod") {
         switch (environment) {
             case "prod":
-                this.ssoURI = "https://sso.liberalize.io"
+                this.ssoURI = "https://sso.liberalize.io/#/"
                 this.ssoApi = "https://sso.api.liberalize.io"
                 break;
             case "staging":
-                this.ssoURI = "https://sso.staging.liberalize.io"
+                this.ssoURI = "https://sso.staging.liberalize.io/#/"
                 this.ssoApi = "https://sso.api.staging.liberalize.io"
                 break;
             case "dev":
-                this.ssoURI = "https://sso.dev.liberalize.io"
+                this.ssoURI = "https://sso.dev.liberalize.io/#/"
                 this.ssoApi = "https://sso.api.dev.liberalize.io"
                 break;
             case "local":
-                this.ssoURI = "http://localhost:3000"
+                this.ssoURI = "http://localhost:3000/#/"
                 this.ssoApi = "https://sso.api.dev.liberalize.io"
             default:
                 break;
