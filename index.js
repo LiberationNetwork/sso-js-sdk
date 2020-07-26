@@ -47,23 +47,25 @@ exports.LiberalizeSSO = class {
     }
 
     async getUser() {
-        while (window.localStorage.getItem('libSsoLoading')) {
+        while (window.localStorage.getItem('libSsoLoading') === true) {
             // This will help to store the query
         }
-        var liberalizeJWT = window.localStorage.getItem('libJwt');
-        try {
-            var authRes = await axios.post(
-                `${this.ssoApi}/authenticate`,
-                {
-                    "clientId": this.clientId
-                },
-                {
-                    headers: { "Authorization": `Bearer ${liberalizeJWT}`}
-                }
-            )
-            return authRes.data
-        } catch (err) {
-            return err
+        if (window.localStorage.getItem('libSsoLoading') === false) {
+            var liberalizeJWT = window.localStorage.getItem('libJwt');
+            try {
+                var authRes = await axios.post(
+                    `${this.ssoApi}/authenticate`,
+                    {
+                        "clientId": this.clientId
+                    },
+                    {
+                        headers: { "Authorization": `Bearer ${liberalizeJWT}`}
+                    }
+                )
+                return authRes.data
+            } catch (err) {
+                return err
+            }
         }
     }
 
