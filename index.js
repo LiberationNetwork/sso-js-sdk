@@ -28,6 +28,7 @@ exports.LiberalizeSSO = class {
             tempArr = tempArr.map(async (query) => {
                 var queryArr = query.split("=")
                 if (queryArr[0] === "code") {
+                    window.localStorage.setItem('libSsoLoading', true)
                     try {
                         var tokenRes = await axios.get(
                             `${this.ssoApi}/token?code=${queryArr[1]}&clientId=${clientId}&grantType=authorization_code`
@@ -35,7 +36,9 @@ exports.LiberalizeSSO = class {
                         window.localStorage.setItem('libJwt', tokenRes.data.idToken)
                         window.localStorage.setItem('libJwtExp', tokenRes.data.expiresAt)
                         window.localStorage.setItem('libJwtAccess', tokenRes.data.accessToken)
+                        window.localStorage.setItem('libSsoLoading', false)
                     } catch (err) {
+                        window.localStorage.setItem('libSsoLoading', false)
                         console.info(err)
                     }
                 }
@@ -44,6 +47,9 @@ exports.LiberalizeSSO = class {
     }
 
     async getUser() {
+        while (window.localStorage.getItem('libSsoLoading')) {
+            // This will help to store the query
+        }
         var liberalizeJWT = window.localStorage.getItem('libJwt');
         try {
             var authRes = await axios.post(
