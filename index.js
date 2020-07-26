@@ -21,6 +21,8 @@ exports.LiberalizeSSO = class {
             default:
                 break;
         }
+        let that = this;
+        this.isLoading = true
         this.clientId = clientId
         var tempArr = window.location.href.split("?")
         if (tempArr[1]) {
@@ -28,7 +30,6 @@ exports.LiberalizeSSO = class {
             tempArr = tempArr.map(async (query) => {
                 var queryArr = query.split("=")
                 if (queryArr[0] === "code") {
-                    window.localStorage.setItem('libSsoLoading', true)
                     try {
                         var tokenRes = await axios.get(
                             `${this.ssoApi}/token?code=${queryArr[1]}&clientId=${clientId}&grantType=authorization_code`
@@ -36,21 +37,28 @@ exports.LiberalizeSSO = class {
                         window.localStorage.setItem('libJwt', tokenRes.data.idToken)
                         window.localStorage.setItem('libJwtExp', tokenRes.data.expiresAt)
                         window.localStorage.setItem('libJwtAccess', tokenRes.data.accessToken)
-                        window.localStorage.setItem('libSsoLoading', false)
+                        that.isLoading = false
                     } catch (err) {
-                        window.localStorage.setItem('libSsoLoading', false)
                         console.info(err)
+                        that.isLoading = false
                     }
                 }
             })
+        } else {
+            this.isLoading = false
         }
     }
 
     async getUser() {
-        while (window.localStorage.getItem('libSsoLoading') === true) {
-            // This will help to store the query
+        let that = this;
+        if (this.isLoading === true) {
+            return new Promise(function(resolve) {
+                setTimeout(() => {
+                    resolve(that.getUser())
+                }, 1000)
+            })
         }
-        if (window.localStorage.getItem('libSsoLoading') === false) {
+        if (this.isLoading === false) {
             var liberalizeJWT = window.localStorage.getItem('libJwt');
             try {
                 var authRes = await axios.post(
