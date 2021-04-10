@@ -31,8 +31,13 @@ exports.LiberalizeSSO = class {
                 var queryArr = query.split("=")
                 if (queryArr[0] === "code") {
                     try {
-                        var tokenRes = await axios.get(
-                            `${this.ssoApi}/token?code=${queryArr[1]}&clientId=${clientId}&grantType=authorization_code`
+                        var tokenRes = await axios.post(
+                            `${this.ssoApi}/token`,
+                            {
+                                "code": queryArr[1],
+                                "clientId": clientId,
+                                "grantType": "authorization_code"
+                            }
                         )
                         window.localStorage.setItem('libJwt', tokenRes.data.idToken)
                         window.localStorage.setItem('libJwtExp', tokenRes.data.expiresAt)
